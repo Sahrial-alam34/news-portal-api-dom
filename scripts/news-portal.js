@@ -1,5 +1,7 @@
+//7
 let fetchData = [];
 const fetchCategories = () => {
+  //1
   fetch("https://openapi.programming-hero.com/api/news/categories")
     .then((res) => res.json())
     .then((data) => {
@@ -13,6 +15,7 @@ const fetchCategories = () => {
     };
 
 const showCategories = (data) => {
+  //2
   //   console.log(data);
   // capture categories container to append all the category links
   const categoriesContainer = document.getElementById("categories-container");
@@ -30,23 +33,28 @@ const showCategories = (data) => {
 
 // fetch all newses available in a category
 const fetchCategoryNews = (category_id, category_name) => {
+  //3
   // console.log(category_id);
   const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
+      // 8
         fetchData = data.data;
         showAllNews(data.data, category_name)
     });
 };
 
 const showAllNews = (data, category_name) => {
+  //4
   console.log(data, category_name);
+  //4 a
   document.getElementById("news-count").innerText = data.length;
   document.getElementById("category-name").innerText = category_name;
   const newsContainer = document.getElementById("all-news");
   newsContainer.innerHTML = "";
   data.forEach((singleNews) => {
+    //4 b
     const { _id, image_url, title, details, author, total_view,rating } = singleNews;
     // newsContainer.innerHTML += ``
     const card = document.createElement("div");
@@ -100,14 +108,14 @@ const showAllNews = (data, category_name) => {
     newsContainer.appendChild(card);
   });
 };
-
+//5
 const fetchNewsDetail = (news_id) => {
   let url = `https://openapi.programming-hero.com/api/news/${news_id}`;
   fetch(url)
     .then((res) => res.json())
     .then((data) => showNewsDetail(data.data[0]));
 };
-
+//6
 const showNewsDetail = (newsDetail) => {
   //
   const { _id, image_url, title, details, author, total_view, others_info } = newsDetail;
@@ -174,6 +182,7 @@ const showNewsDetail = (newsDetail) => {
 //  0, false, null, undefined, ""
 
 // show trending news
+//9
 const showTrending=()=>{
     const trendingNews = fetchData.filter(singleData => singleData.others_info.is_trending === true);
     const category_name = document.getElementById("category-name").innerText;
